@@ -1,4 +1,3 @@
-import sys
 from load import load_log 
 from utils import daytosec
 path = 'testcase/log_test3.txt' #ログ監視ファイルの指定
