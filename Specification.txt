@@ -8,5 +8,4 @@
 [テストケースについて]
 log_test1.txt 例題のテスト
 log_test2.txt 故障が連続で来る、各サーバーでエラーが起きる
-log_test3.txt 入力エラー
-log_test4.txt 日付が飛び飛びのリスト
+log_test3.txt 故障→回復　故障→回復が同一のサーバーである場合
