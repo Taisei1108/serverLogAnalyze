@@ -1,7 +1,8 @@
 import sys
 from load import load_log 
-path = 'testcase/log_test3.txt'
-
+from utils import daytosec
+path = 'testcase/log_test3.txt' #ログ監視ファイルの指定
+N = 1 #N回連続タイムアウトで故障認定
 
 serve_log = load_log(path)
 #server_log['num'],['date'],['network'],['state']
@@ -21,11 +22,20 @@ for i in serve_log['num']:
 #故障を検出する
 for server in serve_list:
     break_flag = 0
+    break_count = 0
     for i in serve_list[str(server)]:
-        if serve_log['state'][i]=='-' and break_flag ==0:
-            break_flag = 1
-            break_i = i
+        if serve_log['state'][i]=='-':
+            if break_count==0:
+                break_i = i
+                break_count+=1
+            else:
+                break_count+=1
+            if break_count>=N:
+                break_flag=1
         elif serve_log['state'][i]!='-' and break_flag ==1:
-            #故障時間を秒に治す関数作る
-            print(server,':',int(serve_log['date'][i])-int(serve_log['date'][break_i]))
+            date = int(serve_log['date'][i])-int(serve_log['date'][break_i])
+            print(server,':',daytosec(str(date)))
             break_flag = 0 
+            break_count = 0
+        else:
+            break_count=0

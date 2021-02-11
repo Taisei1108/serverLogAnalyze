@@ -1,6 +1,7 @@
 import sys
 from load import load_log 
-path = 'testcase/log_test3.txt'
+from utils import daytosec
+path = 'testcase/log_test3.txt' #ログ監視ファイルの指定
 
 
 serve_log = load_log(path)
@@ -26,6 +27,6 @@ for server in serve_list:
             break_flag = 1
             break_i = i
         elif serve_log['state'][i]!='-' and break_flag ==1:
-            #故障時間を秒に治す関数作る
-            print(server,':',int(serve_log['date'][i])-int(serve_log['date'][break_i]))
+            date=int(serve_log['date'][i])-int(serve_log['date'][break_i])
+            print(server,':',daytosec(str(date)))
             break_flag = 0 
